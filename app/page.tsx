@@ -1,7 +1,15 @@
-"use client";
+// "use client";
 import * as React from "react";
-import { Bold, Plus, Settings2 } from "lucide-react";
-import { ToastSimple } from "@/components/notif";
+import {
+  Bold,
+  Calculator,
+  CalendarDays,
+  Italic,
+  Plus,
+  Settings2,
+  Terminal,
+  Underline,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -63,17 +71,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import {
@@ -91,6 +89,120 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { Toast } from "@/components/ui/toast";
+import ListItem from "@/components/ListItem";
+import ShowNotification from "@/components/ShowNotification";
+import Menu from "@/components/Menu";
+import Wrap from "@/components/Wrap";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Cloud,
+  CreditCard,
+  Github,
+  Keyboard,
+  LifeBuoy,
+  LogOut,
+  Mail,
+  MessageSquare,
+  // Plus,
+  PlusCircle,
+  Settings,
+  User,
+  UserPlus,
+  Users,
+} from "lucide-react";
+import DropdownMenuComponent from "@/components/DropdownMenu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import DatePickerComponent from "@/components/DatePicker";
+import {
+  ContextMenu,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from "@/components/ui/command";
+import { Smile } from "lucide-react";
+// import CommandDialogComponent from "@/components/commandDialogComponent";
+import { Checkbox } from "@/components/ui/checkbox";
+import { CheckboxComponent } from "@/components/CheckboxComponent";
+import CollapsibleComponent from "@/components/CollapsibleComponent";
+import { CommandDialogComponent } from "@/components/CommandDialogComponent";
+import { Card_Component } from "./components/Card_Component";
+import { Loader2 } from "lucide-react";
+import Btn_Child from "./components/Btn_Child";
+import { Badge, badgeVariants } from "@/components/ui/badge";
+import Image from "next/image";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Combobox } from "./components/combobox";
+import { DataTable } from "./components/data-table";
+import { Payment, columns } from "./components/colums";
+import { DataTablePagination } from "./components/data-table-pagination.";
+import { UserNav } from "./components/user-nav";
+import { ProfileForm } from "./components/Form";
 
 const invoices = [
   {
@@ -139,52 +251,482 @@ const invoices = [
 const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`
 );
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
-];
 
-export default function Home() {
-  const { toast } = useToast();
+async function getData(): Promise<Payment[]> {
+  return [
+    {
+      id: "111",
+      harga: "100",
+      status: "pending",
+      email: "m@mail.com",
+    },
+    {
+      id: "222",
+      harga: "78",
+      status: "success",
+      email: "m@mail.com",
+    },
+    {
+      id: "333",
+      harga: "7",
+      status: "pending",
+      email: "m@m.com",
+    },
+    {
+      id: "444",
+      harga: "86",
+      status: "pending",
+      email: "m@m.com",
+    },
+    {
+      id: "555",
+      harga: "87",
+      status: "failed",
+      email: "m@m.com",
+    },
+    {
+      id: "6",
+      harga: "100",
+      status: "pending",
+      email: "m@m.com",
+    },
+    {
+      id: "7",
+      harga: "68",
+      status: "success",
+      email: "m@m.com",
+    },
+    {
+      id: "8",
+      harga: "65",
+      status: "pending",
+      email: "m@m.com",
+    },
+    {
+      id: "9",
+      harga: "34",
+      status: "pending",
+      email: "m@m.com",
+    },
+    {
+      id: "10",
+      harga: "10",
+      status: "failed",
+      email: "m@m.com",
+    },
+    {
+      id: "11",
+      harga: "20",
+      status: "pending",
+      email: "m@m.com",
+    },
+    {
+      id: "12",
+      harga: "20",
+      status: "failed",
+      email: "m@m.com",
+    },
+  ];
+}
+
+export default async function Home() {
+  // const { toast } = useToast();
+  const data = await getData();
   return (
-    <main className="grid gap-5 p-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-stretch ">
-      {/* <main className="flex flex-wrap gap-5 p-5 justify-stretch "> */}
+    <main className="grid gap-8 p-8  lg:grid-cols-3 xl:grid-cols-4 justify-stretch ">
+      {/* UP */}
+
+      {/* <Wrap as="CHANGE">
+        <Calendar />
+      </Wrap> */}
+
+      <Wrap as="React Hooks Form">
+        <ProfileForm />
+      </Wrap>
+
+      <Wrap as="Date Table" isWide={true}>
+        <UserNav />
+        <DataTable columns={columns} data={data} />
+      </Wrap>
+
+      <Wrap as="Accordion">
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Is it accessible?</AccordionTrigger>
+            <AccordionContent>
+              Yes. It adheres to the WAI-ARIA design pattern.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>Is it styled?</AccordionTrigger>
+            <AccordionContent>
+              Yes. It comes with default styles that matches the other
+              components aesthetic.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>Is it animated?</AccordionTrigger>
+            <AccordionContent>
+              Yes. Its animated by default, but you can disable it if you
+              prefer.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </Wrap>
+
+      <Wrap as="Alert">
+        <Alert>
+          <Terminal className="h-4 w-4" />
+          <AlertTitle>Heads up!</AlertTitle>
+          <AlertDescription>
+            You can add components to your app using the cli.
+          </AlertDescription>
+        </Alert>
+        <Alert variant={"destructive"}>
+          <Terminal className="h-4 w-4" />
+          <AlertTitle>Heads up!</AlertTitle>
+          <AlertDescription>
+            You can add components to your app using the cli.
+          </AlertDescription>
+        </Alert>
+      </Wrap>
+
+      <Wrap as="Alert Dialog">
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="outline">Show Dialog</Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction>Continue</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </Wrap>
+
+      <Wrap as="Aspect Ratio">
+        <AspectRatio ratio={16 / 9} className="bg-muted">
+          <Image
+            src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+            alt="Photo by Drew Beamer"
+            fill
+            className="rounded-md object-cover"
+          />
+        </AspectRatio>
+      </Wrap>
+
+      <Wrap as="Avatar">
+        <Avatar>
+          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+      </Wrap>
+
+      <Wrap as="Badge">
+        <div className="flex flex-col gap-2">
+          <Badge>Badge</Badge>
+          <Badge variant={"secondary"}>Badge</Badge>
+          <Badge variant={"outline"}>Badge</Badge>
+          <Badge variant={"destructive"}>Badge</Badge>
+          <Link href="/" className={badgeVariants({ variant: "outline" })}>
+            Badge
+          </Link>
+          <Link href="/">
+            <Badge variant={"secondary"}>Badge</Badge>
+          </Link>
+        </div>
+      </Wrap>
+
+      <Wrap as="Button">
+        <div className="flex flex-col gap-2">
+          <Button>Button</Button>
+          <Btn_Child />
+          <Link href="/login">Login</Link>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="destructive">Destructive</Button>
+          <Button variant="outline">Outline</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="link">Link</Button>
+          <Button>
+            <Mail className="w-4 h-4 mr-2" /> Login with Email
+          </Button>
+          <Button disabled>
+            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            Please wait
+          </Button>
+        </div>
+      </Wrap>
 
       <Wrap as="Calender">
         <Calendar />
+      </Wrap>
+
+      <Wrap as="Card">
+        <Card_Component />
+      </Wrap>
+
+      <Wrap as="Checkbox">
+        <CheckboxComponent />
+      </Wrap>
+
+      <Wrap as="Collapsible" isClient={true}>
+        <CollapsibleComponent />
+      </Wrap>
+
+      <Wrap as="Combobox">
+        <Combobox />
+      </Wrap>
+
+      <Wrap as="Command">
+        <CommandDialogComponent />
+      </Wrap>
+
+      <Wrap as="Context Menu">
+        <ContextMenu>
+          <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
+            Right click here
+          </ContextMenuTrigger>
+          <ContextMenuContent className="w-64">
+            <ContextMenuItem inset>
+              Back
+              <ContextMenuShortcut>⌘[</ContextMenuShortcut>
+            </ContextMenuItem>
+            <ContextMenuItem inset disabled>
+              Forward
+              <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+            </ContextMenuItem>
+            <ContextMenuItem inset>
+              Reload
+              <ContextMenuShortcut>⌘R</ContextMenuShortcut>
+            </ContextMenuItem>
+            <ContextMenuSub>
+              <ContextMenuSubTrigger inset>More Tools</ContextMenuSubTrigger>
+              <ContextMenuSubContent className="w-48">
+                <ContextMenuItem>
+                  Save Page As...
+                  <ContextMenuShortcut>⇧⌘S</ContextMenuShortcut>
+                </ContextMenuItem>
+                <ContextMenuItem>Create Shortcut...</ContextMenuItem>
+                <ContextMenuItem>Name Window...</ContextMenuItem>
+                <ContextMenuSeparator />
+                <ContextMenuItem>Developer Tools</ContextMenuItem>
+              </ContextMenuSubContent>
+            </ContextMenuSub>
+            <ContextMenuSeparator />
+            <ContextMenuCheckboxItem checked>
+              Show Bookmarks Bar
+              <ContextMenuShortcut>⌘⇧B</ContextMenuShortcut>
+            </ContextMenuCheckboxItem>
+            <ContextMenuCheckboxItem>Show Full URLs</ContextMenuCheckboxItem>
+            <ContextMenuSeparator />
+            <ContextMenuRadioGroup value="pedro">
+              <ContextMenuLabel inset>People</ContextMenuLabel>
+              <ContextMenuSeparator />
+              <ContextMenuRadioItem value="pedro">
+                Pedro Duarte
+              </ContextMenuRadioItem>
+              <ContextMenuRadioItem value="colm">
+                Colm Tuite
+              </ContextMenuRadioItem>
+            </ContextMenuRadioGroup>
+          </ContextMenuContent>
+        </ContextMenu>
+      </Wrap>
+
+      {/* <Wrap as="Date Table">
+        <DataTable columns={columns} data={data} />
+      </Wrap> */}
+
+      <Wrap as="Date Picker">
+        <DatePickerComponent />
+      </Wrap>
+
+      <Wrap as="Dialog">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline">Edit Profile</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Edit profile</DialogTitle>
+              <DialogDescription>
+                Make changes to your profile here. Click save when youre done.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid items-center grid-cols-4 gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Name
+                </Label>
+                <Input id="name" value="Pedro Duarte" className="col-span-3" />
+              </div>
+              <div className="grid items-center grid-cols-4 gap-4">
+                <Label htmlFor="username" className="text-right">
+                  Username
+                </Label>
+                <Input id="username" value="@peduarte" className="col-span-3" />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit">Save changes</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </Wrap>
+
+      <Wrap as="Dropdown Menu" isClient={true}>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">Open</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <User className="w-4 h-4 mr-2" />
+                <span>Profile</span>
+                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <CreditCard className="w-4 h-4 mr-2" />
+                <span>Billing</span>
+                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Settings className="w-4 h-4 mr-2" />
+                <span>Settings</span>
+                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Keyboard className="w-4 h-4 mr-2" />
+                <span>Keyboard shortcuts</span>
+                <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <Users className="w-4 h-4 mr-2" />
+                <span>Team</span>
+              </DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  <span>Invite users</span>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>
+                      <Mail className="w-4 h-4 mr-2" />
+                      <span>Email</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <MessageSquare className="w-4 h-4 mr-2" />
+                      <span>Message</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <PlusCircle className="w-4 h-4 mr-2" />
+                      <span>More...</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+              <DropdownMenuItem>
+                <Plus className="w-4 h-4 mr-2" />
+                <span>New Team</span>
+                <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Github className="w-4 h-4 mr-2" />
+              <span>GitHub</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <LifeBuoy className="w-4 h-4 mr-2" />
+              <span>Support</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem disabled>
+              <Cloud className="w-4 h-4 mr-2" />
+              <span>API</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <LogOut className="w-4 h-4 mr-2" />
+              <span>Log out</span>
+              <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenuComponent />
+      </Wrap>
+
+      <Wrap as="Hover Card">
+        <HoverCard>
+          <HoverCardTrigger asChild>
+            <Button variant="link">@nextjs</Button>
+          </HoverCardTrigger>
+          <HoverCardContent className="w-80">
+            <div className="flex space-x-4">
+              <Avatar>
+                <AvatarImage src="https://github.com/vercel.png" />
+                <AvatarFallback>VC</AvatarFallback>
+              </Avatar>
+              <div className="space-y-1 ">
+                <h4 className="text-sm font-semibold">@nextjs</h4>
+                <p className="text-sm">
+                  The React Framework – created and maintained by @vercel.
+                </p>
+                <div className="flex items-center pt-2">
+                  <CalendarDays className="w-4 h-4 mr-2 opacity-70" />{" "}
+                  <span className="text-xs text-muted-foreground">
+                    Joined December 2021
+                  </span>
+                </div>
+              </div>
+            </div>
+          </HoverCardContent>
+        </HoverCard>
+      </Wrap>
+
+      <Wrap as="Input">
+        <div className="flex flex-col gap-5">
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="email-2">Email</Label>
+            <Input type="email" id="email-2" placeholder="Email" />
+            <p className="text-sm text-muted-foreground">
+              Enter your email address.
+            </p>
+          </div>
+
+          <div className="flex items-center w-full max-w-sm space-x-2">
+            <Input type="email" placeholder="Email" />
+            <Button type="submit">Subscribe</Button>
+          </div>
+
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="picture">Picture</Label>
+            <Input id="picture" type="file" />
+          </div>
+        </div>
+      </Wrap>
+
+      <Wrap as="Label">
+        <Label htmlFor="email">Your email address</Label>
       </Wrap>
 
       <Wrap as="Menubar">
@@ -287,70 +829,8 @@ export default function Home() {
         </Menubar>
       </Wrap>
 
-      <Wrap as="Navigation Menu">
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                  <li className="row-span-3">
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="flex flex-col justify-end w-full h-full p-6 no-underline rounded-md outline-none select-none bg-gradient-to-b from-muted/50 to-muted focus:shadow-md"
-                        href="/"
-                      >
-                        <div className="w-6 h-6 bg-red-500"></div>
-                        <div className="mt-4 mb-2 text-lg font-medium">
-                          shadcn/ui
-                        </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
-                          Beautifully designed components built with Radix UI
-                          and Tailwind CSS.
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                  <ListItem href="/docs" title="Introduction">
-                    Re-usable components built using Radix UI and Tailwind CSS.
-                  </ListItem>
-                  <ListItem href="/docs/installation" title="Installation">
-                    How to install dependencies and structure your app.
-                  </ListItem>
-                  <ListItem
-                    href="/docs/primitives/typography"
-                    title="Typography"
-                  >
-                    Styles for headings, paragraphs, lists...etc
-                  </ListItem>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                  {components.map((component) => (
-                    <ListItem
-                      key={component.title}
-                      title={component.title}
-                      href={component.href}
-                    >
-                      {component.description}
-                    </ListItem>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Documentation
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+      <Wrap as="Navigation Menu" isClient={true}>
+        <Menu />
       </Wrap>
 
       <Wrap as="Popover">
@@ -653,29 +1133,46 @@ export default function Home() {
         <Textarea placeholder="Type your message here." />
       </Wrap>
 
-      <Wrap as="Toast" er={true}>
-        {/* <Button
-          onClick={() => {
-            toast({
-              title: "Scheduled: Catch up",
-              description: "Friday, February 10, 2023 at 5:57 PM",
-            });
-          }}
-        >
-          Show Toast
-        </Button> */}
+      <Wrap as="Toast" isClient={true}>
+        <ShowNotification />
       </Wrap>
 
       <Wrap as="Toggle">
         <Toggle aria-label="Toggle italic">
           <Bold className="w-4 h-4" />
         </Toggle>
+
+        <Toggle variant="outline" aria-label="Toggle italic">
+          <Italic className="w-4 h-4" />
+        </Toggle>
+
+        <Toggle aria-label="Toggle italic">
+          <Italic className="w-4 h-4 mr-2" />
+          Italic
+        </Toggle>
+
+        <Toggle size="sm" aria-label="Toggle italic">
+          <Italic className="w-4 h-4" />
+        </Toggle>
+
+        <Toggle size="lg" aria-label="Toggle italic">
+          <Italic className="w-4 h-4" />
+        </Toggle>
+
+        <Toggle aria-label="Toggle italic" disabled>
+          <Underline className="w-4 h-4" />
+        </Toggle>
       </Wrap>
 
       <Wrap as="Tooltip">
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>Hover</TooltipTrigger>
+            <TooltipTrigger asChild>
+              <Button variant="outline" className="w-10 p-0 rounded-full">
+                <Plus className="w-4 h-4" />
+                <span className="sr-only">Add</span>
+              </Button>
+            </TooltipTrigger>
             <TooltipContent>
               <p>Add to library</p>
             </TooltipContent>
@@ -685,57 +1182,3 @@ export default function Home() {
     </main>
   );
 }
-
-function Wrap({
-  as,
-  er,
-  children,
-}: {
-  as?: String;
-  er?: Boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className={`flex flex-col p-5 border shadow-md items-center grow `}>
-      <div className="mb-5 text-center">
-        <small
-          className={` font-bold ${er ? "text-red-500" : "text-green-500"}`}
-        >
-          {as}
-        </small>
-      </div>
-
-      {er && <span className="text-red-500">Bermasalah</span>}
-
-      <div className="flex items-center justify-center w-full grow">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="text-sm leading-snug line-clamp-2 text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = "ListItem";
