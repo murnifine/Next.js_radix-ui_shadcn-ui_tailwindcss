@@ -37,6 +37,7 @@
   }
  
   .dark {
+    /* @apply --back */
     --background: 224 71% 4%;
     --foreground: 213 31% 91%;
  
